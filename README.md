@@ -14,6 +14,12 @@ Install a skill directly from this repository:
 npx skills add https://github.com/giulianotesta7/agent-skills --skill sdd-greenfield-spec
 ```
 
+or:
+
+```bash
+npx skills add https://github.com/giulianotesta7/agent-skills --skill api-integration-builder
+```
+
 That command installs the `sdd-greenfield-spec` skill into your local skills environment so your coding assistant can invoke it when needed.
 
 ## Available Skills
@@ -21,6 +27,7 @@ That command installs the `sdd-greenfield-spec` skill into your local skills env
 | Skill | Purpose | Outputs | Install |
 | --- | --- | --- | --- |
 | `sdd-greenfield-spec` | Creates a complete Spec-Driven Development package for a brand-new project | `proposal.md`, `spec.md`, `design.md`, `tasks.md` | `npx skills add https://github.com/giulianotesta7/agent-skills --skill sdd-greenfield-spec` |
+| `api-integration-builder` | Guides assistants through reliable API integrations, typed clients, webhook handlers, retries, validation, and payload mapping | Integration client/server code, DTO mapping, webhook flows, integration specs | `npx skills add https://github.com/giulianotesta7/agent-skills --skill api-integration-builder` |
 
 ## Skill Details
 
@@ -42,11 +49,27 @@ The skill runs a structured discovery interview and then generates the four stan
 
 It is intended to work well with AI coding tools including Claude Code, OpenCode, Cursor, and Windsurf.
 
+### `api-integration-builder`
+
+Use this skill when building integrations against third-party or internal APIs, especially when the task involves webhook handling, retries, idempotency, payload validation, or transport-to-domain mapping.
+
+It is designed for practical backend and automation work such as:
+- Third-party API clients
+- Internal service adapters
+- Webhook receivers and processors
+- n8n-connected integrations
+- FastAPI / Flask / Node.js integration layers
+
 ## Repository Structure
 
 ```text
 .
 ├── README.md
+├── skills/
+│   └── api-integration-builder/
+│       ├── SKILL.md
+│       └── assets/
+│           └── integration-spec-template.md
 └── sdd-greenfield-spec/
     └── SKILL.md
 ```
