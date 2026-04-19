@@ -20,6 +20,12 @@ or:
 npx skills add https://github.com/giulianotesta7/agent-skills --skill api-integration-builder
 ```
 
+or:
+
+```bash
+npx skills add https://github.com/giulianotesta7/agent-skills --skill n8n-workflow-reviewer
+```
+
 That command installs the `sdd-greenfield-spec` skill into your local skills environment so your coding assistant can invoke it when needed.
 
 ## Available Skills
@@ -28,6 +34,7 @@ That command installs the `sdd-greenfield-spec` skill into your local skills env
 | --- | --- | --- | --- |
 | `sdd-greenfield-spec` | Creates a complete Spec-Driven Development package for a brand-new project | `proposal.md`, `spec.md`, `design.md`, `tasks.md` | `npx skills add https://github.com/giulianotesta7/agent-skills --skill sdd-greenfield-spec` |
 | `api-integration-builder` | Guides assistants through reliable API integrations, typed clients, webhook handlers, retries, validation, and payload mapping | Integration client/server code, DTO mapping, webhook flows, integration specs | `npx skills add https://github.com/giulianotesta7/agent-skills --skill api-integration-builder` |
+| `n8n-workflow-reviewer` | Reviews exported n8n workflows for reliability, maintainability, security, and AI-specific risks, including when logic should move into code | Workflow review findings, risk checklist, refactor recommendations | `npx skills add https://github.com/giulianotesta7/agent-skills --skill n8n-workflow-reviewer` |
 
 ## Skill Details
 
@@ -60,16 +67,31 @@ It is designed for practical backend and automation work such as:
 - n8n-connected integrations
 - FastAPI / Flask / Node.js integration layers
 
+### `n8n-workflow-reviewer`
+
+Use this skill when reviewing exported n8n workflows before production or when debugging workflows that have become fragile, opaque, or too logic-heavy.
+
+It is designed for workflow review tasks such as:
+- Reliability reviews
+- Security and credential reviews
+- AI workflow validation checks
+- Refactor decisions (keep in n8n vs move to code)
+- Maintainability and naming feedback
+
 ## Repository Structure
 
 ```text
 .
 ├── README.md
 ├── skills/
-│   └── api-integration-builder/
+│   ├── api-integration-builder/
+│   │   ├── SKILL.md
+│   │   └── assets/
+│   │       └── integration-spec-template.md
+│   └── n8n-workflow-reviewer/
 │       ├── SKILL.md
 │       └── assets/
-│           └── integration-spec-template.md
+│           └── review-checklist.md
 └── sdd-greenfield-spec/
     └── SKILL.md
 ```
