@@ -1,8 +1,8 @@
 ---
 name: n8n-workflow-reviewer
 description: >
-  Review exported n8n workflows for reliability, maintainability, security, and AI-specific risks.
-  Trigger: When examining n8n JSON, webhook flows, Function/Code nodes, retries, error handling, agentic workflows, or deciding whether logic should stay in n8n or move to code.
+  Review n8n workflows through the n8n MCP when available, or from exported JSON as a fallback, for reliability, maintainability, security, and AI-specific risks.
+  Trigger: When examining n8n workflows, webhook flows, Function/Code nodes, retries, error handling, agentic workflows, or deciding whether logic should stay in n8n or move to code.
 license: Apache-2.0
 metadata:
   author: gentleman-programming
@@ -11,13 +11,44 @@ metadata:
 
 ## When to Use
 
-- Reviewing an exported n8n workflow before shipping it to production
+- Reviewing a live n8n workflow through the n8n MCP before shipping it to production
+- Reviewing an exported n8n workflow when MCP access is unavailable
 - Auditing an existing workflow that became fragile, slow, or hard to maintain
 - Evaluating whether a Function/Code node should remain in n8n or move into code
 - Checking webhook pipelines, AI agent flows, and external API automations for risk
 - Preparing feedback for a teammate on naming, structure, retries, idempotency, and observability
 
 ## Critical Patterns
+
+### 0. Use the n8n MCP first, JSON second
+
+Preferred order:
+
+| Source | When to use |
+|--------|-------------|
+| n8n MCP | Default when connected to a live n8n instance |
+| Exported JSON | Fallback when MCP is unavailable |
+
+If the n8n MCP is available, review the workflow from the live source of truth. That gives you:
+
+- the current published workflow definition
+- node configuration as it actually exists in the instance
+- execution history and failure patterns when exposed by the MCP
+- environment context that a stale export may hide
+
+Only fall back to raw exported JSON when MCP access is not available.
+
+### 0.1 MCP review sequence
+
+When the MCP is available, try to review in this order:
+
+1. Locate the workflow by name or ID
+2. Fetch the workflow definition from MCP
+3. Inspect recent executions if MCP exposes them
+4. Identify failing nodes, retry loops, long-running branches, and brittle expressions
+5. Then apply the five review passes below
+
+If execution history is available, trust production evidence over static guesses.
 
 ### 1. Review in this order
 
@@ -56,6 +87,7 @@ Every review should explicitly answer:
 - What happens if one downstream step fails after side effects already happened?
 - What happens if the input payload changes shape?
 - What happens if the AI output is malformed?
+- What do recent executions show about retries, noisy nodes, and recurring failures?
 
 If the workflow cannot answer those, it is not production-ready.
 
@@ -144,3 +176,4 @@ rg 'http|token|secret|bearer|api[_-]?key' workflow.json
 ## Resources
 
 - **Templates**: See [assets/](assets/) for a reusable workflow review checklist
+- **Templates**: See [assets/mcp-review-sequence.md](assets/mcp-review-sequence.md) for a live MCP-first review flow

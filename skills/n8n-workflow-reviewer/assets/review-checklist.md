@@ -1,6 +1,11 @@
 # n8n Workflow Review Checklist
 
-Use this checklist when reviewing an exported workflow.
+Use this checklist when reviewing a workflow through the n8n MCP or from an exported JSON.
+
+## 0. Source of truth
+- Is the review using the n8n MCP or an exported JSON?
+- If MCP is available, was the live workflow definition inspected?
+- If MCP exposes executions, were recent runs reviewed before giving recommendations?
 
 ## 1. Purpose and Trigger
 - What business problem does this workflow solve?
